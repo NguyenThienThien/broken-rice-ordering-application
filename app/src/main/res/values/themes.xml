@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Broken_rice_ordering_application" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Tùy chỉnh theme của bạn tại đây. -->
+
+    </style>
+
+
 </resources>
