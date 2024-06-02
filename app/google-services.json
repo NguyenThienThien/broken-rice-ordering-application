@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "830643622897",
+    "project_id": "broken-rice-ordering-app",
+    "storage_bucket": "broken-rice-ordering-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:830643622897:android:ed8b9fd10f7fc9b464ea50",
+        "android_client_info": {
+          "package_name": "com.example.broken_rice_ordering_application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfVTjTdAVv1OeKqnfrmioNio6V663G-14"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
