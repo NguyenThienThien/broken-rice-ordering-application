@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
@@ -29,7 +30,7 @@ import com.example.broken_rice_ordering_application.activities.StatisticsScreen
 import com.example.broken_rice_ordering_application.activities.SupportScreen
 
 @Composable
-fun AppNavigation(){
+fun AppNavigation(navController: NavController){
     val navController = rememberNavController()
 
     Scaffold(
@@ -90,11 +91,11 @@ fun AppNavigation(){
             startDestination = Screens.HomeScreen.name,
             modifier = Modifier.padding(paddingValues)
         ) {
-            composable(route = Screens.StatisticsScreen.name){
-                HomeScreen()
+            composable(route = Screens.HomeScreen.name){
+                HomeScreen(navController = navController)
             }
 
-            composable(route = Screens.HomeScreen.name){
+            composable(route = Screens.StatisticsScreen.name){
                 StatisticsScreen()
             }
 
