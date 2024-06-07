@@ -81,9 +81,12 @@ dependencies {
 
     //Navigation
     implementation("androidx.navigation:navigation-compose:2.4.0-alpha10")
+    //
+    implementation("io.coil-kt:coil-compose:2.6.0")
 
     //ViewModel vs Room
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.1")
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.8.1")
     implementation ("androidx.room:room-ktx:2.6.1")
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.7")
 }

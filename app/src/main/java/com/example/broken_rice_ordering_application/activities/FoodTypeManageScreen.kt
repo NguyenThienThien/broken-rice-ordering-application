@@ -13,10 +13,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Scaffold
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,7 +28,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -33,10 +35,11 @@ import androidx.core.graphics.toColorInt
 import androidx.navigation.NavController
 import com.example.broken_rice_ordering_application.R
 import com.example.broken_rice_ordering_application.activities.components.RowItem
+import com.example.broken_rice_ordering_application.model.FoodType
 import com.example.broken_rice_ordering_application.navigation.ScreensList
 
 @Composable
-fun ManagementScreen(navController: NavController){
+fun FoodTypeManageScreen(navController: NavController){
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -52,10 +55,18 @@ fun ManagementScreen(navController: NavController){
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(Color("#252121".toColorInt()))
-                    .padding(15.dp),
+                    .padding(top = 15.dp, end = 15.dp, bottom = 15.dp),
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                IconButton(
+                    onClick = { navController.popBackStack() }
+                ) {
+                    Icon(Icons.Default.KeyboardArrowLeft, contentDescription = "back",
+                        modifier = Modifier.size(40.dp),
+                        tint = Color.White
+                    )
+                }
                 Image(
                     painter = painterResource(id = R.drawable.logo),
                     contentDescription = "Logo",
@@ -77,42 +88,19 @@ fun ManagementScreen(navController: NavController){
                     .background(Color("#252121".toColorInt()))
             ) {
                 RowItem(
-                    text = "Quản lý loại món ăn",
-                    onClick = {navController.navigate(ScreensList.FOODTYPE_MN_SCREEN.route)}
+                    text = "Thêm loại món ăn",
+                    onClick = {navController.navigate(ScreensList.ADD_FOODTYPE_SCREEN.route)}
                 )
-                Spacer(modifier = Modifier.height(16.dp))
                 RowItem(
-                    text = "Quản lý món ăn",
-                    onClick = {navController.navigate(ScreensList.FOOD_MN_SCREEN.route)}
+                    text = "Sửa loại món ăn",
+                    onClick = {navController.navigate(ScreensList.FOODTYPE_LIST_SCREEN_Update.route)}
+                )
+                RowItem(
+                    text = "Xóa loại món ăn",
+                    onClick = {navController.navigate(ScreensList.FOODTYPE_LIST_SCREEN_Delete.route)}
                 )
             }
         }
 
     }
 }
-
-//@Composable
-//fun RowItem( text: String, onClick: () -> Unit) {
-//    Row(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .padding(16.dp)
-//            .clickable { onClick() },
-//        verticalAlignment = Alignment.CenterVertically
-//    ) {
-//        Image(
-//            painter = painterResource(id = R.drawable.logo),
-//            contentDescription = null,
-//            modifier = Modifier
-//                .size(50.dp)
-//                .clip(CircleShape),
-//            contentScale = ContentScale.Crop
-//        )
-//        Spacer(modifier = Modifier.width(16.dp))
-//        Text(
-//            text = text,
-//            fontSize = 18.sp,
-//            color = Color.White
-//        )
-//    }
-//}

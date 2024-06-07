@@ -17,19 +17,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.broken_rice_ordering_application.activities.FoodTypeManageScreen
 import com.example.broken_rice_ordering_application.activities.HomeScreen
 import com.example.broken_rice_ordering_application.activities.ManagementScreen
 import com.example.broken_rice_ordering_application.activities.StatisticsScreen
 import com.example.broken_rice_ordering_application.activities.SupportScreen
 
 @Composable
-fun AppNavigation(){
+fun AppNavigation(navigationController: NavController){
     val navController = rememberNavController()
 
     Scaffold(
@@ -99,7 +101,7 @@ fun AppNavigation(){
             }
 
             composable(route = Screens.ManagementScreen.name){
-                ManagementScreen()
+                ManagementScreen(navController = navigationController)
             }
 
             composable(route = Screens.SupportScreen.name){
