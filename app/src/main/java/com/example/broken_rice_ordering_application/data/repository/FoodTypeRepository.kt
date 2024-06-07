@@ -79,36 +79,36 @@ class FoodTypeRepository(private val retrofitService: RetrofitService) {
         }
         return livedata
     }
-    fun updateFoodType(
-        foodTypeRequest: FoodTypeRequest,
-        onComplete: (Boolean) -> Unit
-    ){
-        CoroutineScope(Dispatchers.IO).launch {
-            _isSuccess.postValue(
-                try {
-                    val response = retrofitService.brokenRiceApiServive.updateFoodType(foodTypeRequest.id ?:"", foodTypeRequest)
-                    if(response.isSuccessful){
-                        response.body()?.let {
-                            if (it.status == 1) {
-                                getFoodTypes()
-                                withContext(Dispatchers.Main) {
-                                    onComplete
-                                }
-                                true
-                            } else {
-                                false
-                            }
-                        }?: false
-                    }else{
-                        false
-                    }
-                }catch (e: Exception) {
-                    Log.e("Tag", "updateFoodType: " + e.message)
-                    false
-                }
-            )
-        }
-    }
+//    fun updateFoodType(
+//        foodTypeRequest: FoodTypeRequest,
+//        onComplete: (Boolean) -> Unit
+//    ){
+//        CoroutineScope(Dispatchers.IO).launch {
+//            _isSuccess.postValue(
+//                try {
+//                    val response = retrofitService.brokenRiceApiServive.updateFoodType(foodTypeRequest.id ?:"", foodTypeRequest)
+//                    if(response.isSuccessful){
+//                        response.body()?.let {
+//                            if (it.status == 1) {
+//                                getFoodTypes()
+//                                withContext(Dispatchers.Main) {
+//                                    onComplete
+//                                }
+//                                true
+//                            } else {
+//                                false
+//                            }
+//                        }?: false
+//                    }else{
+//                        false
+//                    }
+//                }catch (e: Exception) {
+//                    Log.e("Tag", "updateFoodType: " + e.message)
+//                    false
+//                }
+//            )
+//        }
+//    }
     fun deleteFoodType(id: String){
         CoroutineScope(Dispatchers.IO).launch {
             _isSuccess.postValue(

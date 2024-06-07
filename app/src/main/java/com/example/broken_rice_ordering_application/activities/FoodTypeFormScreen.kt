@@ -2,6 +2,7 @@ package com.example.broken_rice_ordering_application.activities
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -45,12 +46,15 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
 import androidx.navigation.NavController
+import coil.compose.rememberImagePainter
+import coil.request.ImageRequest
 import com.example.broken_rice_ordering_application.R
 import com.example.broken_rice_ordering_application.model.FoodTypeFormData
 import com.example.broken_rice_ordering_application.model.toFoodTypeFormData
@@ -65,10 +69,7 @@ fun FoodTypeFormScreen(
     navController: NavController,
     foodTypeViewModel: FoodTypeViewModel
 ) {
-    val (foodTypeName, setFoodTypeName) = remember { mutableStateOf("") }
-    //
-    var foodType = if (id != "") foodTypeViewModel.getFoodTypeById(id)
-        .observeAsState(initial = null).value else null
+    val foodType = if (id != "") foodTypeViewModel.getFoodTypeById(id).observeAsState(initial = null).value else null
 
     var formData by remember(foodType) {
         mutableStateOf(foodType?.toFoodTypeFormData() ?: FoodTypeFormData())
@@ -87,9 +88,8 @@ fun FoodTypeFormScreen(
             }
         }
     }
-    val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
-
+    val context = LocalContext.current
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -158,7 +158,18 @@ fun FoodTypeFormScreen(
                     contentAlignment = Alignment.Center,
                 ) {
 
-                    if (imageBitmap != null) {
+                    if (formData.image.isNotEmpty()) {
+                        Image(
+                            painter = rememberImagePainter(
+                                ImageRequest.Builder(context )
+                                    .data(formData.image)
+                                    .build()
+                            ),
+                            contentDescription = null,
+                            modifier = Modifier.size(150.dp),
+                            contentScale = ContentScale.Crop
+                        )
+                    } else if (imageBitmap != null) {
                         Image(
                             bitmap = imageBitmap!!.asImageBitmap(),
                             contentDescription = null,
@@ -185,7 +196,7 @@ fun FoodTypeFormScreen(
                         .padding(16.dp),
                     singleLine = true,
                     decorationBox = { innerTextField ->
-                        if (foodTypeName.isEmpty()) {
+                        if (formData.name.isEmpty()) {
                             Text(
                                 text = "Tên loại món ăn",
                                 color = Color.Gray,
@@ -202,22 +213,23 @@ fun FoodTypeFormScreen(
                             foodTypeViewModel.addFoodType(formData){ success ->
                                 coroutineScope.launch {
                                     if(success){
-                                        snackbarHostState.showSnackbar("Added successfully")
+                                        Toast.makeText(context, "Add successfully", Toast.LENGTH_SHORT).show()
                                         formData = FoodTypeFormData()
                                         imageBitmap = null
                                     }else{
-                                        snackbarHostState.showSnackbar("Failed to add")
+                                        Toast.makeText(context, "Failed to add", Toast.LENGTH_SHORT).show()
                                     }
                                 }
                             }
                         }else{
-                            foodTypeViewModel.updateFoodType(formData.toFoodTypeRequest()){ success ->
+                            if(imageBitmap == null) formData = formData.copy(image = "")
+                            foodTypeViewModel.updateFoodType(formData){ success ->
                                 coroutineScope.launch {
                                     if(success){
-                                        snackbarHostState.showSnackbar("Updated successfully")
+                                        Toast.makeText(context, "Update successfully", Toast.LENGTH_SHORT).show()
                                         navController.popBackStack()
                                     }else{
-                                        snackbarHostState.showSnackbar("Failed to update")
+                                        Toast.makeText(context, "Failed to update", Toast.LENGTH_SHORT).show()
                                         navController.popBackStack()
                                     }
                                 }
@@ -233,14 +245,11 @@ fun FoodTypeFormScreen(
                     Text(
                         text = if (id == "") "Thêm" else "Cập nhật",
                         fontSize = 18.sp,
-                        color = Color.White
+                        color = Color.White,
+                        fontWeight = FontWeight.SemiBold
                     )
                 }
             }
         }
-        SnackbarHost(
-            hostState = snackbarHostState,
-            modifier = Modifier.align(Alignment.BottomCenter)
-        )
     }
 }

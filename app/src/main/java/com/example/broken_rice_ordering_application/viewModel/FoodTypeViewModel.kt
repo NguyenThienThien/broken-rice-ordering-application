@@ -16,30 +16,33 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
 
-class FoodTypeViewModel: ViewModel() {
+class FoodTypeViewModel : ViewModel() {
     private val _foodTypes = MutableLiveData<List<FoodType>>()
     val foodTypes: LiveData<List<FoodType>> = _foodTypes
 
     private val _isSuccess = MutableLiveData<Boolean>()
     val isSuccess: LiveData<Boolean> = _isSuccess
+
     init {
-      getFoodTypes()
+        getFoodTypes()
     }
-    fun getFoodTypes(){
+
+    fun getFoodTypes() {
         viewModelScope.launch {
             try {
                 val response = RetrofitService().brokenRiceApiServive.getFoodTypes()
-                if(response.isSuccessful){
-                    _foodTypes.postValue(response.body()?.map { it.toFoodType()})
-                }else{
+                if (response.isSuccessful) {
+                    _foodTypes.postValue(response.body()?.map { it.toFoodType() })
+                } else {
                     _foodTypes.postValue(emptyList())
                 }
-            }catch (e: Exception){
-                Log.e("Tag", "getFoodType :"+ e.message)
+            } catch (e: Exception) {
+                Log.e("Tag", "getFoodType :" + e.message)
                 _foodTypes.postValue(emptyList())
             }
         }
     }
+
     fun createPartFromString(value: String): RequestBody {
         return RequestBody.create("text/plain".toMediaTypeOrNull(), value)
     }
@@ -58,102 +61,84 @@ class FoodTypeViewModel: ViewModel() {
         val imagePart = prepareFilePart("image", formData.image)
 
         viewModelScope.launch {
-            val response = RetrofitService().brokenRiceApiServive.addFoodType(name, imagePart)
-            if (response.isSuccessful && response.body()?.status == 200) {
-                getFoodTypes()
-                onResult(true)
-            } else {
+            try {
+                val response = RetrofitService().brokenRiceApiServive.addFoodType(name, imagePart)
+                if (response.isSuccessful && response.body()?.status == 200) {
+                    getFoodTypes()
+                    onResult(true)
+                } else {
+                    onResult(false)
+                }
+            } catch (e: Exception) {
+                Log.e("Tag", "addFoodType: " + e.message)
                 onResult(false)
             }
         }
     }
-//    fun addFoodType(foodTypeRequest: FoodTypeRequest, onComplete: (Boolean) -> Unit) {
-//        viewModelScope.launch {
-//            val success = try {
-//                    val response = RetrofitService().brokenRiceApiServive.addFoodType(foodTypeRequest)
-//                    if(response.isSuccessful){
-//                        response.body()?.let {
-//                            if(it.status == 1){
-//                                getFoodTypes()
-//                                true
-//                            }else{
-//                                false
-//                            }
-//                        }?: false
-//                    }else{
-//                        false
-//                    }
-//                }catch (e:Exception){
-//                    Log.e("Tag", "addFoodType: " + e.message)
-//                    false
-//                }
-//            onComplete(success)
-//        }
-//    }
-    fun getFoodTypeById(id: String): LiveData<FoodType?>{
+
+    fun updateFoodType(
+        formData: FoodTypeFormData,
+        onResult: (Boolean) -> Unit
+    ) {
+        val name = createPartFromString(formData.name)
+        val imagePart = if (formData.image.isNotEmpty()) {
+            prepareFilePart("image", formData.image)
+        } else {
+            null
+        }
+        viewModelScope.launch {
+            try {
+                val response = RetrofitService().brokenRiceApiServive.updateFoodType(
+                    formData.id ?: "",
+                    name,
+                    imagePart
+                )
+
+                if (response.isSuccessful && response.body()?.status == 200) {
+                    getFoodTypes()
+                    onResult(true)
+                } else {
+                    onResult(false)
+                }
+            } catch (e: Exception) {
+                Log.e("Tag", "updateFoodType: " + e.message)
+                onResult(false)
+            }
+        }
+    }
+
+    fun deleteFoodType(id: String, onResult: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            try {
+                val response = RetrofitService().brokenRiceApiServive.removeFoodType(id)
+                if (response.isSuccessful && response.body()?.status == 200) {
+                    getFoodTypes()
+                    onResult(true)
+                } else {
+                    onResult(false)
+                }
+            } catch (e: Exception) {
+                Log.e("Tag", "deleteTodo: " + e.message)
+                onResult(false)
+            }
+        }
+    }
+
+    fun getFoodTypeById(id: String): LiveData<FoodType?> {
         val livedata = MutableLiveData<FoodType?>()
         viewModelScope.launch {
             try {
                 val response = RetrofitService().brokenRiceApiServive.getFoodTypesDetails(id)
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
                     livedata.postValue(response.body()?.toFoodType())
-                }else{
+                } else {
                     livedata.postValue(null)
                 }
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 Log.e("Tag", "getFoodTypeById: " + e.message)
                 livedata.postValue(null)
             }
         }
         return livedata
-    }
-    fun updateFoodType(
-        foodTypeRequest: FoodTypeRequest,
-        onComplete: (Boolean) -> Unit
-    ){
-        viewModelScope.launch {
-            val success = try {
-                    val response = RetrofitService().brokenRiceApiServive.updateFoodType(foodTypeRequest.id ?:"", foodTypeRequest)
-                    if(response.isSuccessful){
-                        response.body()?.let {
-                            if (it.status == 1) {
-                                getFoodTypes()
-                                true
-                            } else {
-                                false
-                            }
-                        }?: false
-                    }else{
-                        false
-                    }
-                }catch (e: Exception) {
-                    Log.e("Tag", "updateFoodType: " + e.message)
-                    false
-                }
-            onComplete(success)
-        }
-    }
-    fun deleteFoodType(id: String,onComplete: (Boolean) -> Unit){
-        viewModelScope.launch {
-            val success = try {
-                    val response = RetrofitService().brokenRiceApiServive.removeFoodType(id)
-                    if (response.isSuccessful) {
-                        response.body()?.let {
-                            if (it.status == 1) {
-                                getFoodTypes()
-                                true
-                            } else {
-                                false
-                            }
-                        } ?: false
-                    } else {
-                        false
-                    }
-                } catch (e: Exception) {
-                    Log.e("Tag", "deleteTodo: " + e.message)
-                    false
-                }
-            onComplete(success)
-        }
     }
 }

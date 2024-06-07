@@ -80,7 +80,7 @@ fun ManagementScreen(navController: NavController){
                     text = "Quản lý loại món ăn",
                     onClick = {navController.navigate(ScreensList.FOODTYPE_MN_SCREEN.route)}
                 )
-                Spacer(modifier = Modifier.height(16.dp))
+//                Spacer(modifier = Modifier.height(10.dp))
                 RowItem(
                     text = "Quản lý món ăn",
                     onClick = {navController.navigate(ScreensList.FOOD_MN_SCREEN.route)}

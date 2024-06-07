@@ -34,9 +34,6 @@ interface BrokenRiceApiServive {
     suspend fun getFoodDetails(@Path("id") id: String): Response<FoodResponse>
 
     //==========POST=============
-
-    //    @POST("/api/add-foodtype")
-//    suspend fun addFoodType(@Body foodTypeRequest: FoodTypeRequest, @Part image: MultipartBody.Part): Response<StatusResponse>
     @Multipart
     @POST("/api/add-foodtype")
     suspend fun addFoodType(
@@ -48,11 +45,12 @@ interface BrokenRiceApiServive {
     suspend fun addFood(@Body foodRequest: FoodRequest): Response<StatusResponse>
 
     //==========PUT=============
-
+    @Multipart
     @PUT("/api/update-foodtype/{id}")
     suspend fun updateFoodType(
         @Path("id") id: String,
-        @Body foodTypeRequest: FoodTypeRequest
+        @Part("name") name: RequestBody,
+        @Part image: MultipartBody.Part?
     ): Response<StatusResponse>
 
     @PUT("/api/update-food/{id}")

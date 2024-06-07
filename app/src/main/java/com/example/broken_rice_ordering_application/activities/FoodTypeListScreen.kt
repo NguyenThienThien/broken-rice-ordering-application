@@ -45,7 +45,9 @@ import androidx.navigation.NavController
 import com.example.broken_rice_ordering_application.R
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
+import com.example.broken_rice_ordering_application.activities.components.DialogConfirmDelete
 import com.example.broken_rice_ordering_application.activities.components.ItemFoodType
+import com.example.broken_rice_ordering_application.model.FoodType
 import com.example.broken_rice_ordering_application.navigation.ScreensList
 import com.example.broken_rice_ordering_application.viewModel.FoodTypeViewModel
 import kotlinx.coroutines.coroutineScope
@@ -60,6 +62,8 @@ fun FoodTypeListScreen(status: String,navController: NavController, foodTypeView
     val isSuccess by foodTypeViewModel.isSuccess.observeAsState()
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
+    var showDialogDelete by remember { mutableStateOf(false) }
+    var foodTypeToDelete by remember { mutableStateOf("") }
 
     Box(
         modifier = Modifier
@@ -118,16 +122,8 @@ fun FoodTypeListScreen(status: String,navController: NavController, foodTypeView
                         status = status,
                         onClickHandle = {id ->
                             if(status == "remove"){
-                                foodTypeViewModel.deleteFoodType(id){success ->
-                                    coroutineScope.launch {
-                                        if(success){
-                                            snackbarHostState.showSnackbar("Deleted successfully")
-                                        }else{
-                                            snackbarHostState.showSnackbar("Failed to delete")
-                                        }
-                                    }
-                                }
-
+                                foodTypeToDelete = id
+                                showDialogDelete = true
                             }else{
                                 navController.navigate("${ScreensList.UPDATE_FOODTYPE_SCREEN.route}/${id}")
                             }
@@ -136,18 +132,29 @@ fun FoodTypeListScreen(status: String,navController: NavController, foodTypeView
                 }
             }
         }
-        SnackbarHost(
-            hostState = snackbarHostState,
-            modifier = Modifier.align(Alignment.BottomCenter)
-        )
     }
-//    isSuccess?.let { success ->
-//        LaunchedEffect(success) {
-//            if (success) {
-//                Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show()
-//            } else {
-//                Toast.makeText(context, "Xóa thất bại", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//    }
+    foodTypeToDelete.let { id ->
+        if(showDialogDelete){
+            DialogConfirmDelete(
+                title = "Bạn có chắc chắn muốn xóa loại món ăn này không ?",
+                onConfirm = {
+                    foodTypeViewModel.deleteFoodType(id){ success ->
+                        coroutineScope.launch {
+                            if(success){
+                                Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show()
+                            }else{
+                                Toast.makeText(context, "Xóa thất bại", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                    showDialogDelete = false
+                    foodTypeToDelete = ""
+                },
+                onDismiss = {
+                    showDialogDelete = false
+                    foodTypeToDelete = ""
+                }
+            )
+        }
+    }
 }
