@@ -5,5 +5,5 @@ enum class OrderStatus {
     CONFIRMED, // Đã xác nhận
     CANCELLED, // Đã hủy
     DELIVERING, // Đang giao
-    DELIVERED // Đã giao
+    DELIVERED // Đã giao;
 }
