@@ -27,23 +27,23 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun MainScreen() {
-    val navController = rememberNavController()
-    NavHost(
-        navController = navController,
-        startDestination = "MainHome"
-    ) {
-        composable("MainHome") { AppNavigation(navController) }
-        composable(
-            route = "OrderDetail/{orderId}",
-            arguments = listOf(navArgument("orderId") { type = NavType.StringType })
-        ) { backStackEntry ->
-            val orderId = backStackEntry.arguments?.getString("orderId") ?: ""
-            OrderDetailScreen(navController = navController, orderId = orderId)
-        }
-    }
-}
+//@Composable
+//fun MainScreen() {
+//    val navController = rememberNavController()
+//    NavHost(
+//        navController = navController,
+//        startDestination = "MainHome"
+//    ) {
+//        composable("MainHome") { AppNavigation(navController) }
+//        composable(
+//            route = "OrderDetail/{orderId}",
+//            arguments = listOf(navArgument("orderId") { type = NavType.StringType })
+//        ) { backStackEntry ->
+//            val orderId = backStackEntry.arguments?.getString("orderId") ?: ""
+//            OrderDetailScreen(navController = navController, orderId = orderId)
+//        }
+//    }
+//}
 
 
 

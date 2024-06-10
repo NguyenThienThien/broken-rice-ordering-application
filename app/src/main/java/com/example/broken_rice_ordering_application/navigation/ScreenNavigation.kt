@@ -13,6 +13,7 @@ import com.example.broken_rice_ordering_application.activities.FoodManageScreen
 import com.example.broken_rice_ordering_application.activities.FoodTypeFormScreen
 import com.example.broken_rice_ordering_application.activities.FoodTypeListScreen
 import com.example.broken_rice_ordering_application.activities.FoodTypeManageScreen
+import com.example.broken_rice_ordering_application.activities.OrderDetailScreen
 import com.example.broken_rice_ordering_application.viewModel.FoodTypeViewModel
 import com.example.broken_rice_ordering_application.viewModel.FoodViewModel
 
@@ -60,6 +61,15 @@ fun ScreenNavigation() {
         }
         composable(ScreensList.FOOD_LIST_SCREEN_Delete.route){
             FoodListScreen(status = "remove", navController = navController,foodViewModel)
+        }
+
+        composable("MainHome") { AppNavigation(navController) }
+        composable(
+            route = "OrderDetail/{orderId}",
+            arguments = listOf(navArgument("orderId") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val orderId = backStackEntry.arguments?.getString("orderId") ?: ""
+            OrderDetailScreen(navController = navController, orderId = orderId)
         }
     }
 }

@@ -1,5 +1,7 @@
 package com.example.broken_rice_ordering_application.network
 
+import com.example.broken_rice_ordering_application.data.models.Order
+import com.example.broken_rice_ordering_application.data.models.OrderResponse
 import com.example.broken_rice_ordering_application.model.FoodRequest
 import com.example.broken_rice_ordering_application.model.FoodResponse
 import com.example.broken_rice_ordering_application.model.FoodTypeResponse
@@ -74,5 +76,19 @@ interface BrokenRiceApiServive {
 
     @DELETE("/api/delete-food/{id}")
     suspend fun removeFood(@Path("id") id: String): Response<StatusResponse>
+
+    //==========Thien Api=============
+
+    @GET("/api/get-listOrder")
+    suspend fun getOrderList(): Response<List<OrderResponse>>
+
+    @GET("/api/get-orderDetails-by-id/{id}")
+    suspend fun getOrderDetails(@Path("id") id: String): Response<OrderResponse>
+
+    @PUT("/api/update-Order/{id}")
+    suspend fun updateOrder(
+        @Path("id") id: String,
+        @Body orderResponse: Order
+    ): Response<StatusResponse>
 
 }

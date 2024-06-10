@@ -32,11 +32,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.graphics.toColorInt
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import androidx.wear.compose.material.Text
+import com.example.broken_rice_ordering_application.activities.components.ToolBar
 import com.example.broken_rice_ordering_application.data.models.Order
 import com.example.broken_rice_ordering_application.data.models.OrderStatus
 import com.example.broken_rice_ordering_application.data.models.orderResponseToOrder
@@ -80,7 +82,9 @@ fun HomeScreen(navController: NavController, orderViewModel: OrderViewModel = vi
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.padding(10.dp))
+            ToolBar(navController = navController, title = "Cum túm đim")
+            DividerHome()
+            Spacer(modifier = Modifier.padding(2.dp))
             TextRow("Today: ", currentDate)
             TextRow("Số lượng đơn: ", ListOrdersToday.size.toString())
             TextRow("Doanh thu : ", formattedRevenue, Color(0xFFFE724C))
@@ -240,4 +244,15 @@ fun getOrderStatusPriority(status: OrderStatus): Int {
         OrderStatus.DELIVERED -> 4
         OrderStatus.CANCELLED -> 5
     }
+}
+
+@Composable
+fun DividerHome() {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(5.dp)
+            .background(Color.Black)
+    )
+    Spacer(modifier = Modifier.height(20.dp))
 }

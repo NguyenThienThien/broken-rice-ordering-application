@@ -2,11 +2,11 @@ package com.example.broken_rice_ordering_application.data.repository
 
 import com.example.broken_rice_ordering_application.data.models.Order
 import com.example.broken_rice_ordering_application.data.models.OrderResponse
-import com.example.broken_rice_ordering_application.data.models.StatusResponse
 import com.example.broken_rice_ordering_application.data.models.orderResponseToOrder
-import com.example.broken_rice_ordering_application.data.network.ApiService
+import com.example.broken_rice_ordering_application.model.StatusResponse
+import com.example.broken_rice_ordering_application.network.BrokenRiceApiServive
 
-class OrderRepository(private val apiService: ApiService) {
+class OrderRepository(private val apiService: BrokenRiceApiServive) {
     suspend fun getOrderList(): List<OrderResponse>{
         val response = apiService.getOrderList()
         if(response.isSuccessful){
