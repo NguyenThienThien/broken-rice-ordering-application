@@ -17,34 +17,14 @@ import androidx.navigation.navArgument
 import com.example.broken_rice_ordering_application.navigation.AppNavigation
 import com.example.broken_rice_ordering_application.navigation.ScreenNavigation
 import com.example.broken_rice_ordering_application.ui.theme.Broken_rice_ordering_applicationTheme
+import com.google.firebase.FirebaseApp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             ScreenNavigation()
+            FirebaseApp.initializeApp(this)
         }
     }
 }
-
-//@Composable
-//fun MainScreen() {
-//    val navController = rememberNavController()
-//    NavHost(
-//        navController = navController,
-//        startDestination = "MainHome"
-//    ) {
-//        composable("MainHome") { AppNavigation(navController) }
-//        composable(
-//            route = "OrderDetail/{orderId}",
-//            arguments = listOf(navArgument("orderId") { type = NavType.StringType })
-//        ) { backStackEntry ->
-//            val orderId = backStackEntry.arguments?.getString("orderId") ?: ""
-//            OrderDetailScreen(navController = navController, orderId = orderId)
-//        }
-//    }
-//}
-
-
-
-
