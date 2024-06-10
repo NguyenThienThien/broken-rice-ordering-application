@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -25,11 +26,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
 import androidx.navigation.NavController
 import com.example.broken_rice_ordering_application.R
+
 
 @Composable
 fun ToolBar(navController: NavController, title: String){
@@ -38,27 +42,35 @@ fun ToolBar(navController: NavController, title: String){
             .fillMaxWidth()
             .background(Color("#252121".toColorInt()))
             .padding(top = 15.dp, end = 15.dp, bottom = 15.dp),
-        horizontalArrangement = Arrangement.Start,
+        horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        IconButton(
-            onClick = { navController.popBackStack() }
+        Row(
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(
-                Icons.Default.KeyboardArrowLeft, contentDescription = "back",
-                modifier = Modifier.size(40.dp),
-                tint = Color.White
+            IconButton(
+                onClick = { navController.popBackStack() }
+            ) {
+                Icon(
+                    Icons.Default.KeyboardArrowLeft, contentDescription = "back",
+                    modifier = Modifier.size(40.dp),
+                    tint = Color.White
+                )
+            }
+            Image(
+                painter = painterResource(id = R.drawable.logo),
+                contentDescription = "Logo",
+                modifier = Modifier
+                    .size(50.dp)
+                    .clip(CircleShape),
+                contentScale = ContentScale.Crop
             )
+            Spacer(modifier = Modifier.width(20.dp))
+            Text(text = title, fontWeight = FontWeight.SemiBold, fontSize = 22.sp, color = Color.White)
         }
-        Image(
-            painter = painterResource(id = R.drawable.logo),
-            contentDescription = "Logo",
-            modifier = Modifier
-                .size(50.dp)
-                .clip(CircleShape),
-            contentScale = ContentScale.Crop
+
+        Icon(Icons.Default.Notifications, contentDescription = "", modifier = Modifier.size(28.dp),
+            tint = Color("#fec340".toColorInt())
         )
-        Spacer(modifier = Modifier.width(20.dp))
-        Text(text = title, fontWeight = FontWeight.SemiBold, fontSize = 22.sp, color = Color.White)
     }
 }

@@ -80,7 +80,7 @@ fun FoodTypeListScreen(status: String,navController: NavController, foodTypeView
             ToolBar(navController = navController, title = "Cum tứm đim" )
             Spacer(modifier = Modifier
                 .background(Color("#000000".toColorInt()))
-                .height(7.dp))
+                .height(5.dp))
             LazyColumn(
                 modifier = Modifier
                     .weight(1f)
