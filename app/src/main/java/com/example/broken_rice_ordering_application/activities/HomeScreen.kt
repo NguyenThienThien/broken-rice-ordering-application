@@ -18,8 +18,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 
 import androidx.compose.ui.Modifier
@@ -49,7 +51,10 @@ import java.util.Locale
 @Composable
 fun HomeScreen(navController: NavController, orderViewModel: OrderViewModel = viewModel()){
 
-    val orders by orderViewModel.orders.collectAsState()
+    LaunchedEffect(Unit) {
+        orderViewModel.loadOrders()
+    }
+    val orders by orderViewModel.ordersLiveData.observeAsState(emptyList())
     val currentDate = getCurrentDateFormatted()
 
     // lọc các đơn hàng có trạng thái DELIVERED và ngày hiện tại
@@ -122,9 +127,9 @@ fun OrderItemColumn(navController: NavController, order: Order, index: Int){
 
         Row {
             Text(
-                text = "Đơn hàng #$index",
+                text = "Đơn hàng ${order.id}",
                 fontWeight = FontWeight(700),
-                fontSize = 17.sp,
+                fontSize = 14.sp,
                 lineHeight = 25.sp,
                 modifier = Modifier
                     .weight(1f)
@@ -151,7 +156,7 @@ fun OrderItemColumn(navController: NavController, order: Order, index: Int){
             Text(
                 text = formattedPrice,
                 fontWeight = FontWeight(700),
-                fontSize = 17.sp,
+                fontSize = 14.sp,
                 lineHeight = 25.sp,
                 textAlign = TextAlign.End,
                 modifier = Modifier
@@ -165,7 +170,7 @@ fun OrderItemColumn(navController: NavController, order: Order, index: Int){
             Text(
                 text = "Trạng thái ",
                 fontWeight = FontWeight(700),
-                fontSize = 17.sp,
+                fontSize = 14.sp,
                 lineHeight = 25.sp,
             )
 

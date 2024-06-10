@@ -30,9 +30,8 @@ import com.example.broken_rice_ordering_application.activities.StatisticsScreen
 import com.example.broken_rice_ordering_application.activities.SupportScreen
 
 @Composable
-fun AppNavigation(navController: NavController){
+fun AppNavigation(navigationController: NavController){
     val navController = rememberNavController()
-
     Scaffold(
         bottomBar = {
             NavigationBar(
@@ -92,7 +91,7 @@ fun AppNavigation(navController: NavController){
             modifier = Modifier.padding(paddingValues)
         ) {
             composable(route = Screens.HomeScreen.name){
-                HomeScreen(navController = navController)
+                HomeScreen(navController = navigationController)
             }
 
             composable(route = Screens.StatisticsScreen.name){

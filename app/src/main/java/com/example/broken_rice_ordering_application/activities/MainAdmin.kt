@@ -4,11 +4,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.broken_rice_ordering_application.navigation.AppNavigation
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,8 +24,11 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "MainHome") {
-        composable("MainHome") { HomeScreen(navController = navController) }
+    NavHost(
+        navController = navController,
+        startDestination = "MainHome"
+    ) {
+        composable("MainHome") { AppNavigation(navController) }
         composable(
             route = "OrderDetail/{orderId}",
             arguments = listOf(navArgument("orderId") { type = NavType.StringType })
@@ -33,4 +38,7 @@ fun MainScreen() {
         }
     }
 }
+
+
+
 
