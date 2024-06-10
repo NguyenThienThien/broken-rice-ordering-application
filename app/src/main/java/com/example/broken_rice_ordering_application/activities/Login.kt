@@ -192,7 +192,9 @@ fun LayoutScreenLogin() {
                         context.startActivity(intent)
                     } else {
                         // Đăng nhập bằng tài khoản không phải admin, chuyển hướng đến User
-                        val intent = Intent(context, User::class.java)
+//                        val intent = Intent(context, User::class.java)
+//                        context.startActivity(intent)
+                        val intent = Intent(context, MainActivity::class.java)
                         context.startActivity(intent)
                     }
                 } else {

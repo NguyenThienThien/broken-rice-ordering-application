@@ -24,6 +24,7 @@ class User : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             LAYOUTUSER()
+//            id("com.google.gms.google-services")
         }
     }
 }
