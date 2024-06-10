@@ -16,6 +16,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -53,23 +58,32 @@ fun ManagementScreen(navController: NavController){
                     .fillMaxWidth()
                     .background(Color("#252121".toColorInt()))
                     .padding(15.dp),
-                horizontalArrangement = Arrangement.Start,
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.logo),
-                    contentDescription = "Logo",
-                    modifier = Modifier
-                        .size(50.dp)
-                        .clip(CircleShape),
-                    contentScale = ContentScale.Crop
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.logo),
+                        contentDescription = "Logo",
+                        modifier = Modifier
+                            .size(50.dp)
+                            .clip(CircleShape),
+                        contentScale = ContentScale.Crop
+                    )
+                    Spacer(modifier = Modifier.width(20.dp))
+                    Text(text = "Cum tứm đim", fontWeight = FontWeight.SemiBold, fontSize = 22.sp, color = Color.White)
+                }
+
+                Icon(
+                    Icons.Default.Notifications, contentDescription = "", modifier = Modifier.size(28.dp),
+                    tint = Color("#fec340".toColorInt())
                 )
-                Spacer(modifier = Modifier.width(20.dp))
-                Text(text = "Cum tứm đim", fontWeight = FontWeight.SemiBold, fontSize = 22.sp, color = Color.White)
             }
             Spacer(modifier = Modifier
                 .background(Color("#000000".toColorInt()))
-                .height(7.dp))
+                .height(5.dp))
             Column(
                 modifier = Modifier
                     .weight(1f)

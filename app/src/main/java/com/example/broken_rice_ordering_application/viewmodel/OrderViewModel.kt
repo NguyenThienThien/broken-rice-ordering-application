@@ -9,8 +9,8 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.broken_rice_ordering_application.data.models.Order
 import com.example.broken_rice_ordering_application.data.models.OrderResponse
-import com.example.broken_rice_ordering_application.data.network.RetrofitService
 import com.example.broken_rice_ordering_application.data.repository.OrderRepository
+import com.example.broken_rice_ordering_application.network.RetrofitService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -23,7 +23,7 @@ class OrderViewModel: ViewModel() {
     private val _orderDetailLiveData = MutableLiveData<Order?>()
     val orderDetailLiveData: LiveData<Order?> get() = _orderDetailLiveData
 
-    private val apiService = RetrofitService().ApiServive
+    private val apiService = RetrofitService().brokenRiceApiServive
     private val orderRepository = OrderRepository(apiService)
 
     init {

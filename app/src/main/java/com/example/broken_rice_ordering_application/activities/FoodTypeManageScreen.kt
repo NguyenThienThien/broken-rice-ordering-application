@@ -55,7 +55,7 @@ fun FoodTypeManageScreen(navController: NavController){
             ToolBar(navController = navController, title = "Cum tứm đim" )
             Spacer(modifier = Modifier
                 .background(Color("#000000".toColorInt()))
-                .height(7.dp))
+                .height(5.dp))
             Column(
                 modifier = Modifier
                     .weight(1f)

@@ -106,7 +106,7 @@ fun FoodTypeFormScreen(
             Spacer(
                 modifier = Modifier
                     .background(Color("#000000".toColorInt()))
-                    .height(7.dp)
+                    .height(5.dp)
             )
             Column(
                 modifier = Modifier
