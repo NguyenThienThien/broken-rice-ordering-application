@@ -47,6 +47,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import com.example.broken_rice_ordering_application.activities.components.DialogConfirmDelete
 import com.example.broken_rice_ordering_application.activities.components.ItemFoodType
+import com.example.broken_rice_ordering_application.activities.components.ToolBar
 import com.example.broken_rice_ordering_application.model.FoodType
 import com.example.broken_rice_ordering_application.navigation.ScreensList
 import com.example.broken_rice_ordering_application.viewModel.FoodTypeViewModel
@@ -59,8 +60,8 @@ fun FoodTypeListScreen(status: String,navController: NavController, foodTypeView
     val foodTypeState = foodTypeViewModel.foodTypes.observeAsState(initial = emptyList())
     var listTypes = foodTypeState.value
     val context = LocalContext.current
-    val isSuccess by foodTypeViewModel.isSuccess.observeAsState()
-    val snackbarHostState = remember { SnackbarHostState() }
+//    val isSuccess by foodTypeViewModel.isSuccess.observeAsState()
+//    val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
     var showDialogDelete by remember { mutableStateOf(false) }
     var foodTypeToDelete by remember { mutableStateOf("") }
@@ -76,34 +77,7 @@ fun FoodTypeListScreen(status: String,navController: NavController, foodTypeView
                 .padding()
                 .background(Color("#000000".toColorInt()))
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color("#252121".toColorInt()))
-                    .padding(top = 15.dp, end = 15.dp, bottom = 15.dp),
-                horizontalArrangement = Arrangement.Start,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                IconButton(
-                    onClick = { navController.popBackStack() }
-                ) {
-                    Icon(
-                        Icons.Default.KeyboardArrowLeft, contentDescription = "back",
-                        modifier = Modifier.size(40.dp),
-                        tint = Color.White
-                    )
-                }
-                Image(
-                    painter = painterResource(id = R.drawable.logo),
-                    contentDescription = "Logo",
-                    modifier = Modifier
-                        .size(50.dp)
-                        .clip(CircleShape),
-                    contentScale = ContentScale.Crop
-                )
-                Spacer(modifier = Modifier.width(20.dp))
-                Text(text = "Cum tứm đim", fontWeight = FontWeight.SemiBold, fontSize = 22.sp, color = Color.White)
-            }
+            ToolBar(navController = navController, title = "Cum tứm đim" )
             Spacer(modifier = Modifier
                 .background(Color("#000000".toColorInt()))
                 .height(7.dp))

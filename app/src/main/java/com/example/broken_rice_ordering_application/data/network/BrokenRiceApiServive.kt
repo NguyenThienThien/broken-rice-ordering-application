@@ -1,10 +1,7 @@
 package com.example.broken_rice_ordering_application.network
 
-import com.example.broken_rice_ordering_application.model.Food
 import com.example.broken_rice_ordering_application.model.FoodRequest
 import com.example.broken_rice_ordering_application.model.FoodResponse
-import com.example.broken_rice_ordering_application.model.FoodType
-import com.example.broken_rice_ordering_application.model.FoodTypeRequest
 import com.example.broken_rice_ordering_application.model.FoodTypeResponse
 import com.example.broken_rice_ordering_application.model.StatusResponse
 import okhttp3.MultipartBody
@@ -28,7 +25,7 @@ interface BrokenRiceApiServive {
     suspend fun getFoodTypesDetails(@Path("id") id: String): Response<FoodTypeResponse>
 
     @GET("/api/get-foods")
-    suspend fun getFood(): Response<List<FoodResponse>>
+    suspend fun getFoods(): Response<List<FoodResponse>>
 
     @GET("/api/get-food-details/{id}")
     suspend fun getFoodDetails(@Path("id") id: String): Response<FoodResponse>
@@ -41,8 +38,15 @@ interface BrokenRiceApiServive {
         @Part image: MultipartBody.Part
     ): Response<StatusResponse>
 
+    @Multipart
     @POST("/api/add-food")
-    suspend fun addFood(@Body foodRequest: FoodRequest): Response<StatusResponse>
+    suspend fun addFood(
+        @Part("category") category: RequestBody,
+        @Part("name") name: RequestBody,
+        @Part("foodType") foodType: RequestBody,
+        @Part("price") price: RequestBody,
+        @Part image: MultipartBody.Part
+    ): Response<StatusResponse>
 
     //==========PUT=============
     @Multipart
@@ -53,10 +57,15 @@ interface BrokenRiceApiServive {
         @Part image: MultipartBody.Part?
     ): Response<StatusResponse>
 
+    @Multipart
     @PUT("/api/update-food/{id}")
     suspend fun updateFood(
         @Path("id") id: String,
-        @Body foodRequest: FoodRequest
+        @Part("category") category: RequestBody,
+        @Part("foodType") foodType: RequestBody,
+        @Part("name") name: RequestBody,
+        @Part("price") price: RequestBody,
+        @Part image: MultipartBody.Part?
     ): Response<StatusResponse>
 
     //==========DELETE=============

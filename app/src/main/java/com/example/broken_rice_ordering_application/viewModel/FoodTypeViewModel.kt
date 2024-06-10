@@ -10,6 +10,8 @@ import com.example.broken_rice_ordering_application.model.FoodTypeFormData
 import com.example.broken_rice_ordering_application.model.FoodTypeRequest
 import com.example.broken_rice_ordering_application.model.toFoodType
 import com.example.broken_rice_ordering_application.network.RetrofitService
+import com.example.broken_rice_ordering_application.utils.createPartFromString
+import com.example.broken_rice_ordering_application.utils.prepareFilePart
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -43,15 +45,15 @@ class FoodTypeViewModel : ViewModel() {
         }
     }
 
-    fun createPartFromString(value: String): RequestBody {
-        return RequestBody.create("text/plain".toMediaTypeOrNull(), value)
-    }
-
-    fun prepareFilePart(partName: String, fileUri: String): MultipartBody.Part {
-        val file = File(fileUri)
-        val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
-        return MultipartBody.Part.createFormData(partName, file.name, requestFile)
-    }
+//    fun createPartFromString(value: String): RequestBody {
+//        return RequestBody.create("text/plain".toMediaTypeOrNull(), value)
+//    }
+//
+//    fun prepareFilePart(partName: String, fileUri: String): MultipartBody.Part {
+//        val file = File(fileUri)
+//        val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
+//        return MultipartBody.Part.createFormData(partName, file.name, requestFile)
+//    }
 
     fun addFoodType(
         formData: FoodTypeFormData,

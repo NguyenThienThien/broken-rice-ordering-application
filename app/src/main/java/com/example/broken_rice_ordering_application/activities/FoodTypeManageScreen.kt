@@ -35,6 +35,7 @@ import androidx.core.graphics.toColorInt
 import androidx.navigation.NavController
 import com.example.broken_rice_ordering_application.R
 import com.example.broken_rice_ordering_application.activities.components.RowItem
+import com.example.broken_rice_ordering_application.activities.components.ToolBar
 import com.example.broken_rice_ordering_application.model.FoodType
 import com.example.broken_rice_ordering_application.navigation.ScreensList
 
@@ -51,33 +52,7 @@ fun FoodTypeManageScreen(navController: NavController){
                 .padding()
                 .background(Color("#000000".toColorInt()))
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color("#252121".toColorInt()))
-                    .padding(top = 15.dp, end = 15.dp, bottom = 15.dp),
-                horizontalArrangement = Arrangement.Start,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                IconButton(
-                    onClick = { navController.popBackStack() }
-                ) {
-                    Icon(Icons.Default.KeyboardArrowLeft, contentDescription = "back",
-                        modifier = Modifier.size(40.dp),
-                        tint = Color.White
-                    )
-                }
-                Image(
-                    painter = painterResource(id = R.drawable.logo),
-                    contentDescription = "Logo",
-                    modifier = Modifier
-                        .size(50.dp)
-                        .clip(CircleShape),
-                    contentScale = ContentScale.Crop
-                )
-                Spacer(modifier = Modifier.width(20.dp))
-                Text(text = "Cum tứm đim", fontWeight = FontWeight.SemiBold, fontSize = 22.sp, color = Color.White)
-            }
+            ToolBar(navController = navController, title = "Cum tứm đim" )
             Spacer(modifier = Modifier
                 .background(Color("#000000".toColorInt()))
                 .height(7.dp))

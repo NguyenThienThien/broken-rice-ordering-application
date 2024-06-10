@@ -1,7 +1,6 @@
 package com.example.broken_rice_ordering_application.activities.components
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,18 +26,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
 import coil.compose.AsyncImage
 import coil.compose.rememberImagePainter
 import com.example.broken_rice_ordering_application.R
-import com.example.broken_rice_ordering_application.model.FoodType
+import com.example.broken_rice_ordering_application.model.Food
+import com.example.broken_rice_ordering_application.utils.addQueryParameter
 
 @Composable
-fun ItemFoodType(
+fun ItemFood(
     index: Int,
-    foodType: FoodType,
+    food: Food,
     status: String,
     onClickHandle: (id: String) -> Unit
 ) {
@@ -64,22 +63,32 @@ fun ItemFoodType(
             Spacer(modifier = Modifier.width(15.dp))
 
             AsyncImage(
-                model = foodType.image,
+                model = food.image.addQueryParameter(),
                 contentDescription = null,
                 modifier = Modifier
-                    .size(50.dp)
+                    .size(60.dp)
                     .clip(RoundedCornerShape(8.dp)),
                 contentScale = ContentScale.Crop
             )
             Spacer(modifier = Modifier.width(20.dp))
-            Text(
-                text = foodType.name,
-                style = MaterialTheme.typography.titleMedium,
-                color = Color.White,
-                modifier = Modifier.weight(1f)
-            )
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = food.name,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = Color.White,
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(
+                    text = "${food.price}k",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = Color("#FE724C".toColorInt()),
+                )
+            }
             IconButton(
-                onClick = { onClickHandle(foodType.id) },
+                onClick = { onClickHandle(food.id) },
                 modifier = Modifier.size(32.dp)
             ) {
                 Icon(

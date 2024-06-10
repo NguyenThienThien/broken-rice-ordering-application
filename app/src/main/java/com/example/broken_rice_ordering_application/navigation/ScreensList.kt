@@ -9,5 +9,7 @@ enum class ScreensList(val route:String) {
     FOODTYPE_LIST_SCREEN_Update("food_type_list_screen_update"),
     FOODTYPE_LIST_SCREEN_Delete("food_type_list_screen_delete"),
     ADD_FOOD_SCREEN("add_food_screen"),
-    UPDATE_FOOD("update_food_screen"),
+    UPDATE_FOOD_SCREEN("update_food_screen"),
+    FOOD_LIST_SCREEN_Update("food_list_screen_update"),
+    FOOD_LIST_SCREEN_Delete("food_list_screen_delete"),
 }

@@ -2,6 +2,7 @@ package com.example.broken_rice_ordering_application.utils
 
 import android.content.Context
 import android.net.Uri
+import android.util.Log
 import java.io.*
 
 fun Context.createFileFromUri(uri: Uri,name: String): File?{
@@ -16,12 +17,15 @@ fun Context.createFileFromUri(uri: Uri,name: String): File?{
                 }
             }
         }
+        Log.d("TAG", "File successfully created at: ${file.path}")
         file
     }catch (e: FileNotFoundException) {
         e.printStackTrace()
+        Log.e("TAG", "FileNotFoundException: ${e.message}")
         null
     } catch (e: IOException) {
         e.printStackTrace()
+        Log.e("TAG", "IOException: ${e.message}")
         null
     }
 }
