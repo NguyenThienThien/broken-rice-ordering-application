@@ -1,13 +1,14 @@
 {
   "project_info": {
-    "project_number": "830643622897",
-    "project_id": "broken-rice-ordering-app",
-    "storage_bucket": "broken-rice-ordering-app.appspot.com"
+    "project_number": "351080029880",
+    "firebase_url": "https://fir-a7764-default-rtdb.firebaseio.com",
+    "project_id": "fir-a7764",
+    "storage_bucket": "fir-a7764.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:830643622897:android:ed8b9fd10f7fc9b464ea50",
+        "mobilesdk_app_id": "1:351080029880:android:40dd4debfb00223ad09e4d",
         "android_client_info": {
           "package_name": "com.example.broken_rice_ordering_application"
         }
@@ -15,7 +16,26 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBfVTjTdAVv1OeKqnfrmioNio6V663G-14"
+          "current_key": "AIzaSyC2WwtdBMykPCI4lENHoo1Fl4nnjzFYzaY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:351080029880:android:5a34a10d1b693f5dd09e4d",
+        "android_client_info": {
+          "package_name": "vanphuc.duanThuhai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2WwtdBMykPCI4lENHoo1Fl4nnjzFYzaY"
         }
       ],
       "services": {

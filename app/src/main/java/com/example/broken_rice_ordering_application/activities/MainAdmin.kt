@@ -12,12 +12,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.broken_rice_ordering_application.navigation.AppNavigation
 import com.example.broken_rice_ordering_application.ui.theme.Broken_rice_ordering_applicationTheme
+import com.google.firebase.FirebaseApp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             AppNavigation()
+            FirebaseApp.initializeApp(this)
         }
     }
 }
